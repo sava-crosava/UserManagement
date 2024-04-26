@@ -1,0 +1,9 @@
+user:
+  min-age: 18
+
+spring:
+  application:
+    name: UserManagementAPI
+  jackson:
+    default-property-inclusion: non_null
+
