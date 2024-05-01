@@ -56,6 +56,18 @@ public class UserService {
         return oldUser;
     }
 
+    public User replaceUser(String email, User updatedUser) {
+        if (!userStorage.getUsers().containsKey(email)) {
+            throw new NotFoundException("User not found");
+        }
+
+        userStorage.getUsers().remove(email);
+
+        userStorage.getUsers().put(updatedUser.getEmail(), updatedUser);
+
+        return updatedUser;
+    }
+
     // Deleting user
     public void deleteUser(String email) {
         if (!userStorage.getUsers().containsKey(email)) {

@@ -3,6 +3,7 @@ package ua.savchenko.user_management.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.savchenko.user_management.model.User;
 import ua.savchenko.user_management.service.UserService;
@@ -17,14 +18,21 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public User createUser(@RequestBody @Valid User user) {
         return userService.createUser(user);
     }
 
-    @PutMapping("/{email}")
+    @PatchMapping("/{email}")
     public User updateUser(@PathVariable @Email @Valid String email,
                            @Valid @RequestBody User updatedUser) {
         return userService.updateUser(email, updatedUser);
+    }
+
+    @PutMapping("/{email}")
+    public User replaceUser(@PathVariable @Email @Valid String email,
+                            @Valid @RequestBody User updatedUser) {
+        return userService.replaceUser(email, updatedUser);
     }
 
     @DeleteMapping("/{email}")
